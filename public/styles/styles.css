@@ -1,0 +1,96 @@
+.list-group-item {
+  line-height: 2.5;
+}
+
+body {
+  background-color: #000;
+}
+
+#duck-image {
+  border-style: solid;
+  border-width: 5px;
+  border-color: #dd9c38; 
+  margin-top: 20px; 
+    
+  position: relative;
+  /* Safari 4.0 - 8.0 */
+  -webkit-animation-name: moveimage;
+  -webkit-animation-duration: 5s;
+  -webkit-animation-timing-function: linear;
+  -webkit-animation-delay: 2s;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-direction: alternate;
+
+  /* Standard syntax */
+  animation-name: moveimage;
+  animation-duration: 5s;
+  animation-timing-function: linear;
+  animation-delay: 2s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+/* Safari 4.0 - 8.0 */
+@-webkit-keyframes moveimage {
+  0%   {left:0px; top:50px;}
+  25%  {left:20%; top:50px;}
+  50%  {left:40%; top:200px;}
+  75%  {left:60%; top:300px;}
+  100% {left:10%; top:300px;}
+}
+
+/* Standard syntax */
+@keyframes moveimage {
+  0%   {left:0px; top:50px;}
+  25%  {left:20%; top:50px;}
+  50%  {left:40%; top:200px;}
+  75%  {left:60%; top:300px;}
+  100% {left:10%; top:300px;}
+}
+
+@keyframes pulse {
+  from { transform: scale(1)   ; opacity: 1;    }
+  to   { transform: scale(0.75); opacity: 0.25; }
+}
+
+.login-title {
+  color: #fff;
+  margin-top: 10px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.login-page {
+  display: table;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.login-button {
+  height: 100px;
+  width: 100px;
+  margin-bottom: 5px;
+  margin-right: 5px;
+  border-radius: 5px;
+}
+
+.button-number {
+  font-size: 50px;
+  font-weight: bolder;
+}
+
+#button-clear,
+#button-ok {
+  font-size: 30px;
+}
+
+.login-button:hover { 
+    background-color: blue;
+    color: white;
+}
+
+#button-exit {
+  font-size: 20px;
+  margin-top: 20px;
+  width: 100px;
+}
