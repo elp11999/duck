@@ -1,12 +1,12 @@
-.list-group-item {
-  line-height: 2.5;
-}
+/*
+ * CSS for the splash page
+ */
 
 body {
   background-color: #000;
 }
 
-#duck-image {
+#splash-image {
   border-style: solid;
   border-width: 5px;
   border-color: #dd9c38; 
@@ -53,44 +53,6 @@ body {
   to   { transform: scale(0.75); opacity: 0.25; }
 }
 
-.login-title {
-  color: #fff;
-  margin-top: 10px;
-  margin-bottom: 30px;
-  text-align: center;
-}
-
-.login-page {
-  display: table;
-  margin-right: auto;
-  margin-left: auto;
-}
-
-.login-button {
-  height: 100px;
-  width: 100px;
-  margin-bottom: 5px;
-  margin-right: 5px;
-  border-radius: 5px;
-}
-
-.button-number {
-  font-size: 50px;
-  font-weight: bolder;
-}
-
-#button-clear,
-#button-ok {
-  font-size: 30px;
-}
-
-.login-button:hover { 
-    background-color: blue;
-    color: white;
-}
-
-#button-exit {
-  font-size: 20px;
-  margin-top: 20px;
-  width: 100px;
+.list-group-item {
+  line-height: 2.5;
 }
