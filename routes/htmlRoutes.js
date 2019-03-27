@@ -5,7 +5,7 @@ var path = require("path");
 module.exports = function(app) {
   // Load Splash page
   app.get("/", function(req, res) {
-    console.log("__dirname=" + __dirname);
+    //console.log("__dirname=" + __dirname);
     res.sendFile(path.join(__dirname + "/../public/splash.html"));
     /*
     db.Example.findAll({}).then(function(dbExamples) {
@@ -33,6 +33,18 @@ module.exports = function(app) {
   // Load Main page
   app.get("/main", function(req, res) {
     res.sendFile(path.join(__dirname + "/../public/main.html"));
+    /*
+    db.Example.findAll({}).then(function(dbExamples) {
+      res.render("index", {
+        msg: "Welcome!",
+        examples: dbExamples
+      });
+    });
+    */
+  });
+  // Load Main page
+  app.get("/newtab", function(req, res) {
+    res.sendFile(path.join(__dirname + "/../public/newtab.html"));
     /*
     db.Example.findAll({}).then(function(dbExamples) {
       res.render("index", {
