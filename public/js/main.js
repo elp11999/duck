@@ -10,4 +10,9 @@ $(document).ready(function() {
     // Load the new tab page
     location.href = "/newtab";
   });
+
+  // Create callback for click on the left button
+  $("#top-button-left").click(function(event) {
+    location.href = "/tablist";
+  });
 });

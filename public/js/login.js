@@ -51,6 +51,6 @@ $(document).ready(function() {
 
     // Clear employee id
     empId = "";
-    location.href = "/main";
+    location.href = "/tablist";
   });
 });

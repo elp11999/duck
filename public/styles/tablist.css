@@ -6,67 +6,58 @@ body {
   background-color: #000;
 }
 
-.newtab-info {
-    color: #fff;
-    margin-top: 30px;
-    margin-bottom: 30px;
-    text-align: center;
+.tablist-page {
+  display: table;
+  margin-right: auto;
+  margin-left: auto;
 }
 
-.newtab-title {
+.tablist-title {
   color: #fff;
-  margin-top: 30px;
-  margin-bottom: 30px;
-}
-
-.newtab-label {
-    color: #fff;
-    font-size: 20px;
-}
-
-.tab-name {
-  color: #fff;
-  font-size: 15px;
   margin-top: 30px;
   margin-bottom: 30px;
   text-align: center;
 }
-
-.newtab-keyboard {
+.newtab-label {
+    color: #fff;
+    font-size: 20px;
     text-align: center;
 }
 
-.newtab-button {
+#tab-name {
+  color: #fff;
+  font-size: 15px;
+}
+
+.tab-div {
+    float: left;
+}
+
+.tab-label {
+    margin-left: 10px;    
+    margin-right: 20px
+}
+
+.tab-button {
   height: 75px;
   width: 75px;
   margin-bottom: 5px;
   margin-right: 5px;
-  border-radius: 5px;
-  font-weight: bold;
-  background-color: aqua;
+  border-radius: 5px;  
 }
 
-.newtab-button:hover { 
+.tab-button:hover { 
     background-color: blue;
     color: white;
 }
 
-#button-clear,
-#button-backspace {
-    width: 100px;
-}
-
-#button-space {
-    width: 300px;
-}
-
-#button-ok {
+#button-new-tab {
   margin-top: 20px;
   margin-right: 100px;
   width: 100px;
 }
 
-#button-cancel {
+#button-exit {
   margin-top: 20px;
   width: 100px;
 }

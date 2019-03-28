@@ -42,9 +42,23 @@ module.exports = function(app) {
     });
     */
   });
-  // Load Main page
+
+  // Load New Tab page
   app.get("/newtab", function(req, res) {
     res.sendFile(path.join(__dirname + "/../public/newtab.html"));
+    /*
+    db.Example.findAll({}).then(function(dbExamples) {
+      res.render("index", {
+        msg: "Welcome!",
+        examples: dbExamples
+      });
+    });
+    */
+  });
+
+  // Load Tab list page
+  app.get("/tablist", function(req, res) {
+    res.sendFile(path.join(__dirname + "/../public/tablist.html"));
     /*
     db.Example.findAll({}).then(function(dbExamples) {
       res.render("index", {
