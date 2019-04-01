@@ -22,7 +22,8 @@ body {
 
 .main-top-button:hover,
 .main-middle-button:hover,
-.main-right-button:hover,
+.main-right-drink-button:hover,
+.main-right-food-button:hover,
 .main-bottom-button:hover { 
     background-color: blue;
     color: white;
@@ -59,7 +60,8 @@ body {
     padding-top: 10px;
 }
 
-.main-right-button {
+.main-right-drink-button,
+.main-right-food-button {
   font-size: 15px;
   font-weight: bolder;
   width: 130px;
