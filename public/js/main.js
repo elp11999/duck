@@ -46,7 +46,7 @@ $(document).ready(function() {
   // Function to display tab totals
   function displayTabTotals(mainDiv, totalPrice) {
 
-    itemDiv = $("<div class='main-item-detail cfix'>");
+    itemDiv = $("<div class='main-item-detail cfix id='tab-subtotal-div'>");
     leftSpan = $("<span class='main-left-side'>");
     rightSpan = $("<span class='main-right-side' id='tab-subTotal'>");
     $(leftSpan).text("Subtotal");
@@ -182,12 +182,7 @@ $(document).ready(function() {
     var drinkId = parseInt($(this).data("drink-id")) - 1;
     var drink = drinkItems[parseInt(drinkId)];
     var currentTab = posSystem.openTabs[posSystem.currentTabID-1];
-    var mainDiv = $(".main-page-left");    
-
-    // Display current tab orders
-    console.log(mainDiv);
-    $(mainDiv).empty();
-    $(".main-item-detail" ).remove();
+    var mainDiv = $(".main-page-left"); 
     displayTabOrders(currentTab);
 
     if (currentTab.items_ordered.length > 0)
@@ -203,11 +198,12 @@ $(document).ready(function() {
     $(rightSpan).text(drink.price);
     $(itemDiv).append(leftSpan);
     $(itemDiv).append(rightSpan);
-    $(mainDiv).append(itemDiv);
 
     $("#tab-subTotal").text(currentTab.total);
     $("#tab-total").text(currentTab.total);
     $("#tab-balance-due").text(currentTab.total);
+    //$("#tab-subtotal-div").prepend(itemDiv);
+    $(mainDiv).prepend(itemDiv);
 
     // Update local storage
     localStorage.setItem("posSystem", JSON.stringify(posSystem));
@@ -215,7 +211,35 @@ $(document).ready(function() {
 
   // Call back function when a food button is clicked
   function foodButtonClicked(event) {
+    var totalPrice = 0;
     var foodId = parseInt($(this).data("food-id")) - 1;
+    var food = foodItems[parseInt(foodId)];
+    var currentTab = posSystem.openTabs[posSystem.currentTabID-1];
+    var mainDiv = $(".main-page-left"); 
+    displayTabOrders(currentTab);
+
+    if (currentTab.items_ordered.length > 0)
+    currentTab.items_ordered += ";";
+      currentTab.items_ordered += (food.food_name + ":" + food.price);
+    currentTab.total += parseInt(food.price);
+    currentTab.sub_total = totalPrice;
+
+    var itemDiv = $("<div class='main-item-detail cfix'>");
+    var leftSpan = $("<span class='main-left-side'>");
+    var rightSpan = $("<span class='main-right-side'>");
+    $(leftSpan).text(food.food_name);
+    $(rightSpan).text(food.price);
+    $(itemDiv).append(leftSpan);
+    $(itemDiv).append(rightSpan);
+
+    $("#tab-subTotal").text(currentTab.total);
+    $("#tab-total").text(currentTab.total);
+    $("#tab-balance-due").text(currentTab.total);
+    //$("#tab-subtotal-div").prepend(itemDiv);
+    $(mainDiv).prepend(itemDiv);
+
+    // Update local storage
+    localStorage.setItem("posSystem", JSON.stringify(posSystem));
     console.log("foodId=" + foodId);
   }
 
