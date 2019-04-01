@@ -133,6 +133,14 @@ module.exports = function(app) {
       res.json(dbChecks);
     });
   });
+  
+  // Get tabs
+  app.get("/api/gettab/:id", function(req, res) {
+    db.checks.findOne({where: {id: req.params.id}}).then(function(dbtabs) {
+      //console.log(dbtabs);
+      return res.json(dbtabs);
+    });
+  });
 
   app.get("/api/drinks", function(req, res) {
     db.drinks.findAll({}).then(function(dbdrinks) {
@@ -146,6 +154,15 @@ module.exports = function(app) {
       //console.log(dbfood);
       return res.json(dbfood);
     });
+  });
+
+  // Update tab
+  app.put("/api/updatetab/:id", function(req, res) {
+    console.log(req.body);
+    db.checks.update(req.body,
+      { where: { id: req.params.id } }).then(function (results) {
+        res.json(results);
+      });
   });
 
   // Create a new example

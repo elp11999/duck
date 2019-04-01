@@ -9,16 +9,98 @@ $(document).ready(function() {
   var drinkItems = [];
 
   // Food items
-  var foodItems = [];
+  var foodItems = [];  
 
-  // Get drink Items
-  getDrinkItems();
+  // Get current tab
+  var currentTab = posSystem.openTabs[posSystem.currentTabID-1];
+  getCurrentTab(currentTab);
+
+  // Function to display tab orders
+  function displayTabOrders(currentTab) {
+    var totalPrice = 0;
+    var mainDiv = $(".main-page-left");
+    $(mainDiv).empty();
+   
+    if (currentTab.items_ordered.length > 0) {
+      var currentItems = currentTab.items_ordered.split(";");
+      console.log(currentItems);
+      for (var i = 0; i < currentItems.length; i++) {
+        var itemObj = currentItems[i].split(":");
+        var itemDiv = $("<div class='main-item-detail cfix'>");
+        var leftSpan = $("<span class='main-left-side'>");
+        var rightSpan = $("<span class='main-right-side'>");
+        $(leftSpan).text(itemObj[0]);
+        $(rightSpan).text(itemObj[1]);
+        $(itemDiv).append(leftSpan);
+        $(itemDiv).append(rightSpan);
+        $(mainDiv).append(itemDiv);
+      }
+    }
+   
+    // Display tab totals
+    totalPrice += parseInt(currentTab.total);
+    displayTabTotals(mainDiv, totalPrice);
+
+  }
+  
+  // Function to display tab totals
+  function displayTabTotals(mainDiv, totalPrice) {
+
+    itemDiv = $("<div class='main-item-detail cfix'>");
+    leftSpan = $("<span class='main-left-side'>");
+    rightSpan = $("<span class='main-right-side' id='tab-subTotal'>");
+    $(leftSpan).text("Subtotal");
+    $(rightSpan).text(totalPrice);
+    $(itemDiv).append(leftSpan);
+    $(itemDiv).append(rightSpan);
+    $(mainDiv).append(itemDiv);
+
+    itemDiv = $("<div class='main-item-detail cfix'>");
+    leftSpan = $("<span class='main-left-side'>");
+    rightSpan = $("<span class='main-right-side' id='tab-total'>");
+    $(leftSpan).text("Total");
+    $(rightSpan).text(totalPrice);
+    $(itemDiv).append(leftSpan);
+    $(itemDiv).append(rightSpan);
+    $(mainDiv).append(itemDiv);
+
+    itemDiv = $("<div class='main-item-detail cfix'>");
+    leftSpan = $("<span class='main-left-side'>");
+    rightSpan = $("<span class='main-right-side' id='tab-balance-due'>");
+    $(leftSpan).text("Balance Due");
+    $(rightSpan).text(totalPrice);
+    $(itemDiv).append(leftSpan);
+    $(itemDiv).append(rightSpan);
+    $(mainDiv).append(itemDiv);
+  }
+
+  // Function to get current tab
+  function getCurrentTab(tab) {
+
+    $.ajax("/api/gettab/"+ tab.id, {
+      type: "GET",
+      success: function(resp) {
+        console.log(resp);
+
+        // Display tab orders
+        displayTabOrders(resp);
+
+        // Get drink Items
+        getDrinkItems();
+      },
+      error: function(req, status, err) {
+        console.log("Something went wrong: ", status, err);
+      }
+    });
+  }
 
   // Get the current list of drink items
   function getDrinkItems() {
+    console.log("getDrinkItems:entered!!!");
     $.ajax("/api/drinks", {
       type: "GET",
       success: function(resp) {
+        console.log(resp);
         drinkItems = [];
         var mainDiv = $(".main-page-right");
         for (var i = 0; i < resp.length; i++) {
@@ -35,7 +117,7 @@ $(document).ready(function() {
         getFoodItems();
       },
       error: function(req, status, err) {
-        $("#message-area").text("Something went wrong: ", status, err);
+        console.log("Something went wrong: ", status, err);
       }
     });
   }
@@ -45,6 +127,7 @@ $(document).ready(function() {
     $.ajax("/api/food", {
       type: "GET",
       success: function(resp) {
+        console.log(resp);
         foodItems = [];
         var mainDiv = $(".main-page-right");
         for (var i = 0; i < resp.length; i++) {
@@ -56,6 +139,28 @@ $(document).ready(function() {
         }
         // Set click handler for the good buttons
         $(".main-right-food-button").mousedown(foodButtonClicked);
+      },
+      error: function(req, status, err) {
+       console.log("Something went wrong: ", status, err);
+      }
+    });
+  }
+
+  // Function to update a tab
+  function updateTab(tab) {
+    
+    var tabUpdate = {
+      items_ordered : tab.items_ordered,
+      sub_total : tab.sub_total,
+      total: tab.total,
+      updatedAt: new Date()
+    };
+
+    $.ajax("/api/updatetab/"+ tab.id, {
+      type: "PUT",
+      data: tabUpdate,
+      success: function(resp) {
+        console.log(resp);
       },
       error: function(req, status, err) {
         $("#message-area").text("Something went wrong: ", status, err);
@@ -71,81 +176,38 @@ $(document).ready(function() {
     location.href = "/newtab";
   });
 
-  /*
-  <div class="main-page-left">
-      <div class="main-item-detail cfix">                  
-          <span class="main-left-side">Subtotal</span>                
-          <span class="main-right-side">0.00</span> 
-      </div>
-  */
-
   // Call back function when a drink button is clicked
   function drinkButtonClicked(event) {
     var totalPrice = 0;
-    var item = {};
     var drinkId = parseInt($(this).data("drink-id")) - 1;
     var drink = drinkItems[parseInt(drinkId)];
     var currentTab = posSystem.openTabs[posSystem.currentTabID-1];
-    console.log(currentTab);
-    var mainDiv = $(".main-page-left");
+    var mainDiv = $(".main-page-left");    
+
+    // Display current tab orders
+    console.log(mainDiv);
     $(mainDiv).empty();
-   
-    for (var i = 0; i < currentTab.items.length; i++) {
-      var item = currentTab.items[i];
-      console.log(item);
+    $(".main-item-detail" ).remove();
+    displayTabOrders(currentTab);
 
-      var itemDiv = $("<div class='main-item-detail cfix'>");
-      var leftSpan = $("<span class='main-left-side'>");
-      var rightSpan = $("<span class='main-right-side'>");
-      $(leftSpan).text(item.name);
-      $(rightSpan).text(item.price);
-      $(itemDiv).append(leftSpan);
-      $(itemDiv).append(rightSpan);
-      $(mainDiv).append(itemDiv);
-      totalPrice += parseInt(item.price);
-    }
-
-    item.name = drink.drink_name;
-    item.price = drink.price;
-    currentTab.items.push(item);
-    console.log(currentTab.items);
+    if (currentTab.items_ordered.length > 0)
+    currentTab.items_ordered += ";";
+      currentTab.items_ordered += (drink.drink_name + ":" + drink.price);
+    currentTab.total += parseInt(drink.price);
+    currentTab.sub_total = totalPrice;
 
     var itemDiv = $("<div class='main-item-detail cfix'>");
     var leftSpan = $("<span class='main-left-side'>");
     var rightSpan = $("<span class='main-right-side'>");
-    $(leftSpan).text(item.name);
-    $(rightSpan).text(item.price);
-    $(itemDiv).append(leftSpan);
-    $(itemDiv).append(rightSpan);
-    $(mainDiv).append(itemDiv);
-    totalPrice += parseInt(item.price);
-
-    itemDiv = $("<div class='main-item-detail cfix'>");
-    leftSpan = $("<span class='main-left-side'>");
-    rightSpan = $("<span class='main-right-side'>");
-    $(leftSpan).text("Subtotal");
-    $(rightSpan).text(totalPrice);
+    $(leftSpan).text(drink.drink_name);
+    $(rightSpan).text(drink.price);
     $(itemDiv).append(leftSpan);
     $(itemDiv).append(rightSpan);
     $(mainDiv).append(itemDiv);
 
-    itemDiv = $("<div class='main-item-detail cfix'>");
-    leftSpan = $("<span class='main-left-side'>");
-    rightSpan = $("<span class='main-right-side'>");
-    $(leftSpan).text("Total");
-    $(rightSpan).text(totalPrice);
-    $(itemDiv).append(leftSpan);
-    $(itemDiv).append(rightSpan);
-    $(mainDiv).append(itemDiv);
-
-    itemDiv = $("<div class='main-item-detail cfix'>");
-    leftSpan = $("<span class='main-left-side'>");
-    rightSpan = $("<span class='main-right-side'>");
-    $(leftSpan).text("Balance Due");
-    $(rightSpan).text(totalPrice);
-    $(itemDiv).append(leftSpan);
-    $(itemDiv).append(rightSpan);
-    $(mainDiv).append(itemDiv);
+    $("#tab-subTotal").text(currentTab.total);
+    $("#tab-total").text(currentTab.total);
+    $("#tab-balance-due").text(currentTab.total);
 
     // Update local storage
     localStorage.setItem("posSystem", JSON.stringify(posSystem));
@@ -159,6 +221,8 @@ $(document).ready(function() {
 
   // Create callback for click on the left button
   $("#top-button-left").click(function(event) {
+    var currentTab = posSystem.openTabs[posSystem.currentTabID-1];
+    updateTab(currentTab);
     location.href = "/tablist";
   });
 
