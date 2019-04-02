@@ -129,7 +129,7 @@ $(document).ready(function() {
         drinkItems = [];
         var mainDiv = $(".main-page-right");
         for (var i = 0; i < resp.length; i++) {
-          var button = $("<button class='btn btn-default main-right-drink-button'>");
+          var button = $("<button class='btn btn-success main-right-drink-button'>");
           $(button).text(resp[i].drink_name);
           $(button).attr("data-drink-id", resp[i].id);
           $(mainDiv).append(button);
@@ -156,7 +156,7 @@ $(document).ready(function() {
         foodItems = [];
         var mainDiv = $(".main-page-right");
         for (var i = 0; i < resp.length; i++) {
-          var button = $("<button class='btn btn-default main-right-food-button'>");
+          var button = $("<button class='btn btn-secondary main-right-food-button'>");
           $(button).text(resp[i].food_name);
           $(button).attr("data-food-id", resp[i].id);
           $(mainDiv).append(button);
