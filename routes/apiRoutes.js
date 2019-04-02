@@ -57,8 +57,10 @@ passport.deserializeUser(function(id, done) {
   });
 });
 
+// Express routes
 module.exports = function(app) {  
 
+  // Create a new employee
   app.post('/api/newemployee', function(req, res, next) {
     console.log(req.body);
     let hash = bcrypt.hashSync(req.body.emp_id, 10);
@@ -75,6 +77,7 @@ module.exports = function(app) {
       }); 
   });
 
+  // Create a new tab
   app.post('/api/newtab', function(req, res, next) {
 
     var resp = {};
@@ -98,10 +101,12 @@ module.exports = function(app) {
         });
   });
 
+  // Authenticate employee
   app.post("/api/authform", 
      passport.authenticate('local', { failureRedirect: '/login',
                                       successRedirect: '/tablist' }));  
 
+  // Authenticate employee
   app.post("/api/auth", function(req, res, next) {
     passport.authenticate('local', { session: true }, function(err, user, info) {
       var resp = {};
@@ -134,7 +139,7 @@ module.exports = function(app) {
     });
   });
   
-  // Get tabs
+  // Get a single tab
   app.get("/api/gettab/:id", function(req, res) {
     db.checks.findOne({where: {id: req.params.id}}).then(function(dbtabs) {
       //console.log(dbtabs);
@@ -142,6 +147,7 @@ module.exports = function(app) {
     });
   });
 
+  // Get all drink items
   app.get("/api/drinks", function(req, res) {
     db.drinks.findAll({}).then(function(dbdrinks) {
       //console.log(dbdrinks);
@@ -149,6 +155,7 @@ module.exports = function(app) {
     });
   });
   
+  // Get all food items
   app.get("/api/food", function(req, res) {
     db.food.findAll({}).then(function(dbfood) {
       //console.log(dbfood);
@@ -156,8 +163,17 @@ module.exports = function(app) {
     });
   });
 
-  // Update tab
+  // Update a tab
   app.put("/api/updatetab/:id", function(req, res) {
+    console.log(req.body);
+    db.checks.update(req.body,
+      { where: { id: req.params.id } }).then(function (results) {
+        res.json(results);
+      });
+  });
+
+  // Close a tab
+  app.put("/api/closetab/:id", function(req, res) {
     console.log(req.body);
     db.checks.update(req.body,
       { where: { id: req.params.id } }).then(function (results) {
@@ -179,6 +195,7 @@ module.exports = function(app) {
     });
   });
 
+  // Check if employee is logged in
   function isLoggedIn(req, res, next) {
     if (req.isAuthenticated())
         return next();
