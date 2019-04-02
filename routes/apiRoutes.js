@@ -7,8 +7,8 @@ var db = require("../models");
 
 passport.use(new LocalStrategy(
   function(username, password, done) {
-    console.log("username=" + username);
-    console.log("password=" + password);
+    //console.log("username=" + username);
+    //console.log("password=" + password);
     
     db.employee.findAll({}).then(function(dbUsers) {
       if (dbUsers.length == 0) {
@@ -19,11 +19,11 @@ passport.use(new LocalStrategy(
       for (var i = 0; i < dbUsers.length; i++) {
         var user = dbUsers[i];
         if(bcrypt.compareSync(password.toString(), user.emp_id)) {
-          console.log("login successful"); 
+          console.log("login successful!!"); 
           return done(null, user);
         }
       }
-      console.log("login failed");
+      console.log("login failed!!");
       return done(null, false);
 
     });
