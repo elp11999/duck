@@ -85,7 +85,7 @@ module.exports = function(app) {
 
   // Authenticate employee
   app.post("/api/auth", 
-     passport.authenticate('local', { failureRedirect: '/login',
+     passport.authenticate('local', { failureRedirect: '/loginf',
                                       successRedirect: '/tablist' }));    
   // Get all tabs
   app.get("/api/gettabs", isLoggedIn, function(req, res) {

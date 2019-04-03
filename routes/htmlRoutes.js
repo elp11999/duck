@@ -14,6 +14,11 @@ module.exports = function(app) {
     res.sendFile(path.join(__dirname + "/../public/login.html"));
   });
 
+  // Load Login failed page
+  app.get("/loginf", function(req, res) {
+    res.sendFile(path.join(__dirname + "/../public/loginf.html"));
+  });
+
   // Load Main page
   app.get("/main", isLoggedIn, function(req, res, next) {
     res.sendFile(path.join(__dirname + "/../public/main.html"));
