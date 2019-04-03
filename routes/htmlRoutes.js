@@ -25,7 +25,8 @@ module.exports = function(app) {
   });
 
   // Load Tab list page
-  app.get("/tablist", function(req, res) {
+  app.get("/tablist", isLoggedIn, function(req, res, next) {
+    console.log(req.user);
     res.sendFile(path.join(__dirname + "/../public/tablist.html"));
   });
 
@@ -51,9 +52,12 @@ module.exports = function(app) {
   });
 
   function isLoggedIn(req, res, next) {
+    console.log("HTML isLogged: entered...");
     if (req.isAuthenticated()) {
+      console.log("HTML isLogged: we are authenticated...");
       return next();
     }
+    console.log("HTML isLogged: we are NOT authenticated...");
     res.redirect("/login");
   }
 };

@@ -83,6 +83,7 @@ module.exports = function(app) {
     var resp = {};
  
       db.checks.create({
+          employeeId: req.user.id,
           tab_name: req.body.tab_name,
           items_ordered: "",
           sub_total: 0,
@@ -102,39 +103,36 @@ module.exports = function(app) {
   });
 
   // Authenticate employee
-  app.post("/api/authform", 
+  app.post("/api/auth", 
      passport.authenticate('local', { failureRedirect: '/login',
                                       successRedirect: '/tablist' }));  
 
   // Authenticate employee
-  app.post("/api/auth", function(req, res, next) {
+  app.post("/api/authxxxx", function(req, res, next) {
     passport.authenticate('local', { session: true }, function(err, user, info) {
       var resp = {};
+      console.log("yo")
       
       if (err) { 
-        resp.rc = 1; 
-        resp.message = "Login failed. ", err;
-        return res.json(resp);
+        return res.redirect('/login');
       }
 
       if (!user) {
-        resp.rc = 1; 
-        resp.message = "Login failed.";
-        return res.json(resp);
+        return res.redirect('/login');
       }
       
       resp.rc = 0; 
       resp.serverID = user.id;
       resp.serverName = user.emp_name;
       resp.message = "Login successful.";
-      return res.json(resp);
-      //return res.redirect('/tablist');
+      // return res.json(resp);
+      return res.redirect('/tablist');
     })(req, res, next);
   });
   
   // Get all tabs
-  app.get("/api/gettabs", function(req, res) {
-    db.checks.findAll({}).then(function(dbChecks) {
+  app.get("/api/gettabs", isLoggedIn, function(req, res) {
+    db.checks.findAll({where : {employeeId : req.user.id }}).then(function(dbChecks) {
       res.json(dbChecks);
     });
   });
@@ -197,8 +195,12 @@ module.exports = function(app) {
 
   // Check if employee is logged in
   function isLoggedIn(req, res, next) {
-    if (req.isAuthenticated())
+    console.log("Routes isLogged: entered...");
+    if (req.isAuthenticated()) {
+        console.log("Routes isLogged: We are authenticated...");
         return next();
+    }
+    console.log("Routes isLogged: We are NOT authenticated...");
     res.redirect('/login');
   }
 };

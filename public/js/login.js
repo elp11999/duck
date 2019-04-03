@@ -14,27 +14,31 @@ $(document).ready(function() {
 
   // Create callback for click on a number button
   $(".button-number").click(function(event) {
+    event.preventDefault();
     // Clear message area
     $("#message-area").text("");
     // Build employee id
     empId += $(this).text();
-    console.log("button-number: empId=" + empId);
+    //console.log("button-number: empId=" + empId);
+    $('[name="password"]').val($('[name="password"]').val() + $(this).text())
   });
 
   // Create callback for click on the clear button
   $("#button-clear").click(function(event) {
+    event.preventDefault();
+    $('[name="password"]').val('');
     // Clear message area
     $("#message-area").text("");
     // Clear employee id
     empId = "";
-    console.log("button-clear: empId=" + empId);
+    //console.log("button-clear: empId=" + empId);
   });
 
   // Create callback for click on the exit button
   $("#button-exit").click(function(event) {
     // Clear message area
     $("#message-area").text("");
-    console.log("button-exit: clicked.");
+    //console.log("button-exit: clicked.");
     // Load the splash page
     location.href = "/";
   });
@@ -44,7 +48,7 @@ $(document).ready(function() {
     // Clear message area
     $("#message-area").text("");
 
-    console.log("button-ok: empId=" + empId);
+    //console.log("button-ok: empId=" + empId);
 
     // Make sure we a have an employee number
     if (empId.length === 0) {
@@ -60,31 +64,31 @@ $(document).ready(function() {
       password: empId
     };
 
-    $.ajax("/api/auth", {
-      type: "POST",
-      data: employee,
-      success: function(resp) {
-        console.log(resp);
+    // $.ajax("/api/auth", {
+    //   type: "POST",
+    //   data: employee,
+    //   success: function(resp) {
+    //     console.log(resp);
 
-        // Clear employee id
-        empId = "";
+    //     // Clear employee id
+    //     empId = "";
 
-        // Display message returned
-        $("#message-area").text(resp.message);
+    //     // Display message returned
+    //     $("#message-area").text(resp.message);
 
-        // Redirect to the tab list page
-        if (resp.rc === 0) {
-          posSystem.serverName = resp.serverName;
-          posSystem.serverID = resp.serverID;
-          posSystem.currentTabID = 0;
-          posSystem.openTabs = [];
-          localStorage.setItem("posSystem", JSON.stringify(posSystem));
-          location.href = "/tablist";
-        }
-      },
-      error: function(req, status, err) {
-        $("#message-area").text("Something went wrong: ", status, err);
-      }
-    });
+    //     // Redirect to the tab list page
+    //     if (resp.rc === 0) {
+    //       posSystem.serverName = resp.serverName;
+    //       posSystem.serverID = resp.serverID;
+    //       posSystem.currentTabID = 0;
+    //       posSystem.openTabs = [];
+    //       localStorage.setItem("posSystem", JSON.stringify(posSystem));
+    //       location.href = "/tablist";
+    //     }
+    //   },
+    //   error: function(req, status, err) {
+    //     $("#message-area").text("Something went wrong: ", status, err);
+    //   }
+    // });
   });
 });
