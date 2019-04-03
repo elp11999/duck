@@ -5,6 +5,7 @@ var path = require("path");
 LocalStrategy = require('passport-local').Strategy;
 var db = require("../models");
 
+// Passport local strategy to authenticate a user
 passport.use(new LocalStrategy(
   function(username, password, done) {
     //console.log("username=" + username);
@@ -25,25 +26,7 @@ passport.use(new LocalStrategy(
       }
       console.log("login failed!!");
       return done(null, false);
-
     });
-
-    /*
-    db.employee.findOne({where: { emp_name: username }}).then((user, err) => {
-      if (err) { 
-        throw err;
-      }
-      if (!user) {
-        return done(null, false);
-      }
-      if(!bcrypt.compareSync(password.toString(), user.emp_id)) {
-        console.log("login failed");
-        return done(null, false);
-      }
-      console.log("login successful"); 
-      return done(null, user);
-    });
-    */
   }
 ));
 
@@ -62,7 +45,6 @@ module.exports = function(app) {
 
   // Create a new employee
   app.post('/api/newemployee', function(req, res, next) {
-    console.log(req.body);
     let hash = bcrypt.hashSync(req.body.emp_id, 10);
 
     db.employee.create({
@@ -92,8 +74,7 @@ module.exports = function(app) {
           open: req.body.open,
           createdAt: new Date(),
           updatedAt: new Date()
-        }).then((dbPost) => { 
-          //console.log(dbPost);     
+        }).then((dbPost) => {    
           resp.rc = 0;
           resp.tabId = dbPost.id;
           resp.tabName = dbPost.tab_name;
@@ -105,31 +86,7 @@ module.exports = function(app) {
   // Authenticate employee
   app.post("/api/auth", 
      passport.authenticate('local', { failureRedirect: '/login',
-                                      successRedirect: '/tablist' }));  
-
-  // Authenticate employee
-  app.post("/api/authxxxx", function(req, res, next) {
-    passport.authenticate('local', { session: true }, function(err, user, info) {
-      var resp = {};
-      console.log("yo")
-      
-      if (err) { 
-        return res.redirect('/login');
-      }
-
-      if (!user) {
-        return res.redirect('/login');
-      }
-      
-      resp.rc = 0; 
-      resp.serverID = user.id;
-      resp.serverName = user.emp_name;
-      resp.message = "Login successful.";
-      // return res.json(resp);
-      return res.redirect('/tablist');
-    })(req, res, next);
-  });
-  
+                                      successRedirect: '/tablist' }));    
   // Get all tabs
   app.get("/api/gettabs", isLoggedIn, function(req, res) {
     db.checks.findAll({where : {employeeId : req.user.id }}).then(function(dbChecks) {
@@ -140,7 +97,6 @@ module.exports = function(app) {
   // Get a single tab
   app.get("/api/gettab/:id", function(req, res) {
     db.checks.findOne({where: {id: req.params.id}}).then(function(dbtabs) {
-      //console.log(dbtabs);
       return res.json(dbtabs);
     });
   });
@@ -148,7 +104,6 @@ module.exports = function(app) {
   // Get all drink items
   app.get("/api/drinks", function(req, res) {
     db.drinks.findAll({}).then(function(dbdrinks) {
-      //console.log(dbdrinks);
       return res.json(dbdrinks);
     });
   });
@@ -156,14 +111,12 @@ module.exports = function(app) {
   // Get all food items
   app.get("/api/food", function(req, res) {
     db.food.findAll({}).then(function(dbfood) {
-      //console.log(dbfood);
       return res.json(dbfood);
     });
   });
 
   // Update a tab
   app.put("/api/updatetab/:id", function(req, res) {
-    console.log(req.body);
     db.checks.update(req.body,
       { where: { id: req.params.id } }).then(function (results) {
         res.json(results);
@@ -172,35 +125,17 @@ module.exports = function(app) {
 
   // Close a tab
   app.put("/api/closetab/:id", function(req, res) {
-    console.log(req.body);
     db.checks.update(req.body,
       { where: { id: req.params.id } }).then(function (results) {
         res.json(results);
       });
   });
 
-  // Create a new example
-  app.post("/api/examples", function(req, res) {
-    db.Example.create(req.body).then(function(dbExample) {
-      res.json(dbExample);
-    });
-  });
-
-  // Delete an example by id
-  app.delete("/api/examples/:id", function(req, res) {
-    db.Example.destroy({ where: { id: req.params.id } }).then(function(dbExample) {
-      res.json(dbExample);
-    });
-  });
-
-  // Check if employee is logged in
+   // Ensure users have been authenticate
   function isLoggedIn(req, res, next) {
-    console.log("Routes isLogged: entered...");
     if (req.isAuthenticated()) {
-        console.log("Routes isLogged: We are authenticated...");
         return next();
     }
-    console.log("Routes isLogged: We are NOT authenticated...");
     res.redirect('/login');
   }
 };

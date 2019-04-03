@@ -15,35 +15,24 @@ module.exports = function(app) {
   });
 
   // Load Main page
-  app.get("/main", function(req, res) {
+  app.get("/main", isLoggedIn, function(req, res, next) {
     res.sendFile(path.join(__dirname + "/../public/main.html"));
   });
 
   // Load New Tab page
-  app.get("/newtab", function(req, res) {
+  app.get("/newtab", isLoggedIn, function(req, res, next) {
     res.sendFile(path.join(__dirname + "/../public/newtab.html"));
   });
 
   // Load Tab list page
   app.get("/tablist", isLoggedIn, function(req, res, next) {
-    console.log(req.user);
+    //console.log(req.user);
     res.sendFile(path.join(__dirname + "/../public/tablist.html"));
   });
 
   // Load Tab close page
-  app.get("/tabclose", function(req, res) {
+  app.get("/tabclose", isLoggedIn, function(req, res, next) {
     res.sendFile(path.join(__dirname + "/../public/tabclose.html"));
-  });
-
-  // Load example page and pass in an example by id
-  app.get("/example/:id", function(req, res) {
-    db.Example.findOne({ where: { id: req.params.id } }).then(function(
-      dbExample
-    ) {
-      res.render("example", {
-        example: dbExample
-      });
-    });
   });
 
   // Render 404 page for any unmatched routes
@@ -51,13 +40,11 @@ module.exports = function(app) {
     res.render("404");
   });
 
+  // Ensure users have been authenticate
   function isLoggedIn(req, res, next) {
-    console.log("HTML isLogged: entered...");
     if (req.isAuthenticated()) {
-      console.log("HTML isLogged: we are authenticated...");
       return next();
     }
-    console.log("HTML isLogged: we are NOT authenticated...");
     res.redirect("/login");
   }
 };
