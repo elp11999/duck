@@ -55,11 +55,21 @@ body {
   margin-top: 20px;
   margin-right: 100px;
   width: 100px;
+  /* New Stuff */
+  border-radius: 20px;
+  border-color:grey;
+  border-width:3px;
+  box-shadow: 0 0 4pt 1pt white ;  
 }
 
 #button-exit {
   margin-top: 20px;
   width: 100px;
+  /* New Stuff */
+  border-radius: 20px;
+  border-color:grey;
+  border-width:3px;
+  box-shadow: 0 0 4pt 1pt white ;  
 }
 
 #message-area {

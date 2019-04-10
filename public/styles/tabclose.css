@@ -3,7 +3,7 @@
  */
 
 body {
-  background-color: #000;
+    background-color: #000;
 }
 
 .close-page-top,
@@ -13,11 +13,16 @@ body {
 }
 
 .close-top-button {
-  font-size: 15px;
-  font-weight: bolder;
-  margin-right: 5px;
-  margin-bottom: 10px;
-  width: 120px;
+    font-size: 15px;
+    font-weight: bolder;
+    margin-right: 5px;
+    margin-bottom: 10px;
+    width: 120px;
+    /* New Stuff */
+    border-radius: 20px;
+    border-color:grey;
+    border-width:3px;
+    box-shadow: 0 0 4pt 1pt white ;  
 }
 
 .close-top-button:hover,
@@ -34,6 +39,7 @@ body {
     width: 40%;
     height: 550px;
     margin-left: 10px;
+    border-radius: 25px;
 }
 
 .close-page-middle {
@@ -45,10 +51,15 @@ body {
 }
 
 .close-middle-button {
-  font-size: 15px;
-  font-weight: bolder;
-  width: 130px;
-  margin-bottom: 10px;  
+    font-size: 15px;
+    font-weight: bolder;
+    width: 130px;
+    margin-bottom: 10px;
+    /* New Stuff */
+    border-radius: 20px;
+    border-color:grey;
+    border-width:3px;
+    box-shadow: 0 0 4pt 1pt white ;    
 }
 
 .close-page-right {
@@ -58,23 +69,34 @@ body {
     height: 550px;
     margin-left: 10px;
     padding-top: 10px;
+    border-radius: 25px;
 }
 
 .close-right-button {
-  font-size: 15px;
-  font-weight: bolder;
-  width: 130px;
-  margin-left: 15px;
-  margin-bottom: 10px;  
+    font-size: 15px;
+    font-weight: bolder;
+    width: 130px;
+    margin-left: 15px;
+    margin-bottom: 10px;
+    /* New Stuff */
+    border-radius: 20px;
+    border-color:lightskyblue;
+    border-width:3px;
+    box-shadow: 0 0 4pt 1pt blue ; 
 }
 
 .close-bottom-button {
-  font-size: 15px;
-  font-weight: bolder;
-  margin-top: 10px;
-  margin-right: 5px;
-  margin-bottom: 10px;
-  width: 120px;
+    font-size: 15px;
+    font-weight: bolder;
+    margin-top: 10px;
+    margin-right: 5px;
+    margin-bottom: 10px;
+    width: 120px;
+    /* New Stuff */
+    border-radius: 20px;
+    border-color:grey;
+    border-width:3px;
+    box-shadow: 0 0 4pt 1pt white ;  
 }
 
 .close-left-side {
@@ -98,9 +120,9 @@ body {
 }
 
 #message-area {
-  font-size: 20px;
-  margin-top: 10px;
-  color: red;
+    font-size: 20px;
+    margin-top: 10px;
+    color: red;
 }
 
 
@@ -114,6 +136,34 @@ body {
 
 #close-middle-button-close-tab {
     display: none;
+}
+
+.main-item-detail.cfix:last-child {
+    background-color: gold; 
+    opacity:0.75;
+    color:black;
+ }
+ 
+.close-page-right button:nth-child(-n+13){
+   background-color:blue; 
+
+}
+
+.close-page-right button:nth-child(-n+6){
+   background-color:green; 
+
+}
+.close-page-right button:nth-child(11){
+   background-color:purple; 
+
+}
+.close-page-right button:nth-child(12){
+   background-color:purple; 
+
+}
+.close-page-right button:nth-child(13){
+   background-color:orange; 
+
 }
 
 #myModal .close {

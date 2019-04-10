@@ -3,7 +3,7 @@
  */
 
 body {
-  background-color: #000;
+    background-color: #000;
 }
 
 .main-page-top,
@@ -13,11 +13,16 @@ body {
 }
 
 .main-top-button {
-  font-size: 15px;
-  font-weight: bolder;
-  margin-right: 5px;
-  margin-bottom: 10px;
-  width: 120px;
+    font-size: 15px;
+    font-weight: bolder;
+    margin-right: 5px;
+    margin-bottom: 10px;
+    width: 120px;
+    /* New Stuff */
+    border-radius: 20px;
+    border-color:grey;
+    border-width:3px;
+    box-shadow: 0 0 4pt 1pt white ;
 }
 
 .main-top-button:hover,
@@ -35,6 +40,7 @@ body {
     width: 40%;
     height: 550px;
     margin-left: 10px;
+    border-radius: 25px;
 }
 
 .main-page-middle {
@@ -45,10 +51,15 @@ body {
 }
 
 .main-middle-button {
-  font-size: 15px;
-  font-weight: bolder;
-  width: 120px;
-  margin-bottom: 10px;  
+    font-size: 15px;
+    font-weight: bolder;
+    width: 120px;
+    margin-bottom: 10px; 
+    /* New Stuff */
+    border-radius: 20px;
+    border-color:grey;
+    border-width:3px;
+    box-shadow: 0 0 4pt 1pt white ; 
 }
 
 .main-page-right {
@@ -58,24 +69,35 @@ body {
     height: 550px;
     margin-left: 10px;
     padding-top: 10px;
+    border-radius: 25px;
 }
 
 .main-right-drink-button,
 .main-right-food-button {
-  font-size: 15px;
-  font-weight: bolder;
-  width: 130px;
-  margin-left: 15px;
-  margin-bottom: 10px;  
+    font-size: 15px;
+    font-weight: bolder;
+    width: 130px;
+    margin-left: 15px;
+    margin-bottom: 10px;
+    /* New Stuff */
+    border-radius: 20px;
+    border-color:lightskyblue;
+    border-width:3px;
+    box-shadow: 0 0 4pt 1pt blue ;
 }
 
 .main-bottom-button {
-  font-size: 15px;
-  font-weight: bolder;
-  margin-top: 10px;
-  margin-right: 5px;
-  margin-bottom: 10px;
-  width: 120px;
+    font-size: 15px;
+    font-weight: bolder;
+    margin-top: 10px;
+    margin-right: 5px;
+    margin-bottom: 10px;
+    width: 120px;
+    /* New Stuff */
+    border-radius: 20px;
+    border-color:grey;
+    border-width:3px;
+    box-shadow: 0 0 4pt 1pt white ;  
 }
 
 .main-left-side {
@@ -99,9 +121,44 @@ body {
 }
 
 #message-area {
-  font-size: 20px;
-  margin-top: 10px;
-  color: red;
+    font-size: 20px;
+    margin-top: 10px;
+    color: red;
+}
+
+.main-page-right button:nth-child(-n+20){
+    background-color:purple;
+}
+
+.main-page-right button:nth-child(-n+15){
+    background-color:green;
+}
+
+.main-page-right button:nth-child(-n+9){
+    background-color:orange;
+}
+
+.main-page-right button:nth-child(-n+6){
+   background-color:brown; 
+}
+
+.main-page-right button:nth-last-child(-n+9){
+   background-color:silver; 
+}
+
+.main-page-right button:nth-child(21){
+   background-color:gold; 
+
+}
+
+.main-item-detail.cfix:last-child {
+   background-color: gold; 
+   opacity:0.75;
+   color:black;
+}
+
+.fa-times-circle{
+  font-size:30px;
 }
 
 @media only screen and (max-width: 750px) {

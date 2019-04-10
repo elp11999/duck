@@ -60,7 +60,7 @@ module.exports = function(app) {
   });
 
   // Create a new tab
-  app.post('/api/newtab', function(req, res, next) {
+  app.post('/api/newtab', isLoggedIn, function(req, res, next) {
 
     var resp = {};
  
@@ -95,28 +95,28 @@ module.exports = function(app) {
   });
   
   // Get a single tab
-  app.get("/api/gettab/:id", function(req, res) {
+  app.get("/api/gettab/:id", isLoggedIn, function(req, res) {
     db.checks.findOne({where: {id: req.params.id}}).then(function(dbtabs) {
       return res.json(dbtabs);
     });
   });
 
   // Get all drink items
-  app.get("/api/drinks", function(req, res) {
+  app.get("/api/drinks", isLoggedIn, function(req, res) {
     db.drinks.findAll({}).then(function(dbdrinks) {
       return res.json(dbdrinks);
     });
   });
   
   // Get all food items
-  app.get("/api/food", function(req, res) {
+  app.get("/api/food", isLoggedIn, function(req, res) {
     db.food.findAll({}).then(function(dbfood) {
       return res.json(dbfood);
     });
   });
 
   // Update a tab
-  app.put("/api/updatetab/:id", function(req, res) {
+  app.put("/api/updatetab/:id", isLoggedIn, function(req, res) {
     db.checks.update(req.body,
       { where: { id: req.params.id } }).then(function (results) {
         res.json(results);
@@ -124,7 +124,7 @@ module.exports = function(app) {
   });
 
   // Close a tab
-  app.put("/api/closetab/:id", function(req, res) {
+  app.put("/api/closetab/:id", isLoggedIn, function(req, res) {
     db.checks.update(req.body,
       { where: { id: req.params.id } }).then(function (results) {
         res.json(results);
